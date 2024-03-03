@@ -4,10 +4,10 @@ export interface Transaction {
     descricao: string
     realizada_em: Date
     id: number
-    userId: number
+    user_id: number
 }
 
 export type Transaction2Create = Pick<
     Transaction,
-    'valor' | 'tipo' | 'descricao'
+    'valor' | 'tipo' | 'descricao' | 'realizada_em'
 >

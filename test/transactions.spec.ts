@@ -1,9 +1,11 @@
+import 'dotenv/config'
 import {PGClientService} from '../src/api/services/pg_client_service'
 import {Client} from '../src/domain/entities/client'
 import {CreateClientUC} from '../src/domain/use_cases/clients/create'
 import {DeleteClientUC} from '../src/domain/use_cases/clients/delete_by_id'
 import {GetExtractUC} from '../src/domain/use_cases/clients/get_extract'
 import {CreateTransactionUC} from '../src/domain/use_cases/transactions/create'
+import {closeConnection} from '../src/knex'
 
 const clientService = new PGClientService()
 
@@ -13,7 +15,7 @@ describe('Transactions (UCs)', () => {
     beforeAll(async () => {
         const createClientUC = new CreateClientUC(clientService)
         createdClient = await createClientUC.execute({
-            id: 6,
+            id: 7,
             limite: 1000,
         })
     })
@@ -76,5 +78,6 @@ describe('Transactions (UCs)', () => {
     afterAll(async () => {
         const deleteClientUC = new DeleteClientUC(clientService)
         await deleteClientUC.execute(createdClient.id)
+        await closeConnection()
     })
 })

@@ -10,30 +10,30 @@ export class CreateTransactionUC {
             tipo: string
         },
     ): Transaction2Create {
-        /* HTTP 422 também deve ser retornado caso os campos 
-        do payload estejam fora das especificações como, por exemplo, uma string 
-        maior do que 10 caracteres para o campo descricao ou algo diferente de c 
-        ou d para o campo tipo. Se para o campo valor um número não inteiro for 
-        especificado, você poderá retornar HTTP 422 ou 400. */
         const {descricao, tipo, valor} = newTransaction
         if (descricao.length < 1 || descricao.length > 10)
+            // Scenario 1: description with wrong length
             throw new HttpError(
                 'Descrição precisa ter um tamanho de 1 a 10 caracteres.',
                 422,
             )
         if (tipo !== 'c' && tipo !== 'd')
+            // Scenario 2: invalid type
             throw new HttpError(
                 `Tipo precisa ser 'c' para opção 'crédito' ou 'd' para opção 'débito'.`,
                 422,
             )
+        // Scenario 2: value is NaN
         if (isNaN(valor))
             throw new HttpError('Valor especificado não é um inteiro.', 422)
+        // Scenario 2: value is less than 0
         if (valor <= 0)
             throw new HttpError('Valor não pode ser nulo ou negativo.', 422)
         return {
             descricao,
             tipo,
             valor,
+            realizada_em: new Date(),
         }
     }
 
@@ -48,8 +48,11 @@ export class CreateTransactionUC {
         if (tipo === 'd') {
             // Retirada de um valor
             novoSaldo = saldo - valor
-            if (novoSaldo < limite)
-                throw new HttpError('Valor de transação incorreto.', 422)
+            if (novoSaldo < -limite)
+                throw new HttpError(
+                    'Valor de transação maior que o limite aceito.',
+                    422,
+                )
         } else novoSaldo = saldo + valor // Depósito de um valor
         return novoSaldo
     }

@@ -3,7 +3,6 @@ import {Transaction2Create} from '../entities/transaction'
 
 export interface IClientService {
     create(newUser: Client2Create): Promise<Client>
-    fetchAll(): Promise<Client[]>
     doTransaction(
         id: number,
         newTransaction: Transaction2Create,
@@ -11,5 +10,5 @@ export interface IClientService {
     ): Promise<Pick<Client, 'limite' | 'saldo'>>
     getExtract(id: number): Promise<Extract>
     findById(id: number): Promise<Client | undefined | null>
-    deleteById(id: number): Promise<Client>
+    deleteById(id: number): Promise<void>
 }

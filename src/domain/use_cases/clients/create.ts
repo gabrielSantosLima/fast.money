@@ -10,7 +10,6 @@ export class CreateClientUC {
             id,
             limite,
             saldo: 0,
-            saldoInicial: 0,
         })
         return createdClient
     }
