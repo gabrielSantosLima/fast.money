@@ -1,9 +1,10 @@
 import {IClientService} from '../../ports/iclient_service'
 
-export class GetExtractUC {
+export class DeleteClientUC {
     constructor(private readonly clientService: IClientService) {}
 
     async execute(id: number) {
-        return this.clientService.getExtract(id)
+        const deletedClient = await this.clientService.deleteById(id)
+        return deletedClient
     }
 }

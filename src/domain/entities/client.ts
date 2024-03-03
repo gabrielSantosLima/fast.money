@@ -11,7 +11,10 @@ export interface Client {
     >[]
 }
 
-export type Client2Create = Pick<Client, 'id' | 'limite'>
+export type Client2Create = Pick<
+    Client,
+    'id' | 'limite' | 'saldo' | 'saldoInicial'
+>
 
 export type Extract = Pick<Client, 'ultimas_transacoes'> & {
     saldo: {
