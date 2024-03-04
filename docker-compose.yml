@@ -3,6 +3,7 @@ version: '3.5'
 services:
     api:
         build: .
+        image: fast-money-api
         environment:
             - NODE_ENV=production
             - DB_URL=postgresql://db:5432/FMDB?user=admin&password=fastmoneyapi
