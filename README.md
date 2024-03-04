@@ -6,7 +6,7 @@
 
 ## Technologies
 
-fast.money API uses:
+**fast.money** API uses:
 
 -   Express.js (+ Typescript)
 -   Knex.js (Query Builder)
