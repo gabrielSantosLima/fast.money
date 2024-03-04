@@ -2,7 +2,7 @@
 
 # 💳 fast.money
 
-> An API to quickly carry out monetary transactions built on Express.js and Typescript, using PostgreSQL
+> An API to quickly make monetary transactions built on Express.js and Typescript, using PostgreSQL
 
 ## Technologies
 
