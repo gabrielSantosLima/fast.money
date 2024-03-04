@@ -3,13 +3,16 @@ version: '3.5'
 services:
     api:
         build: .
-        hostname: api
+        image: fast-money-api
         environment:
-            - DB_HOSTNAME=db
+            - NODE_ENV=production
+            - DB_URL=postgresql://db:5432/FMDB?user=admin&password=fastmoneyapi
         ports:
             - '3000:3000'
         depends_on:
             - db
+        networks:
+            - api
         deploy:
             resources:
                 limits:
@@ -17,7 +20,6 @@ services:
                     memory: '200MB'
     db:
         image: postgres:latest
-        hostname: db
         environment:
             - POSTGRES_PASSWORD=fastmoneyapi
             - POSTGRES_USER=admin
@@ -26,12 +28,13 @@ services:
             - '5432:5432'
         volumes:
             - ./db/init.sql:/docker-entrypoint-initdb.d/script.sql
+        networks:
+            - api
         deploy:
             resources:
                 limits:
                     cpus: '0.13'
                     memory: '140MB'
 networks:
-    default:
+    api:
         driver: bridge
-        name: fast-money
